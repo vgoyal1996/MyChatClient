@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "367916660038",
+    "firebase_url": "https://mychatclient-7c7e6.firebaseio.com",
+    "project_id": "mychatclient-7c7e6",
+    "storage_bucket": "mychatclient-7c7e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367916660038:android:1f44e339544732a7",
+        "android_client_info": {
+          "package_name": "com.example.vipul.mychatclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367916660038-5k76qe16javp1uskhj7bep8q8miqus86.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-_Pxzt1c24rE-0twgAOs6iNy4cUUt6p0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
