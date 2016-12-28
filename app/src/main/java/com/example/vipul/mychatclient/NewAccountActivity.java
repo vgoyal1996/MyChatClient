@@ -14,6 +14,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class NewAccountActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -32,11 +37,11 @@ public class NewAccountActivity extends AppCompatActivity {
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = nameText.getText().toString().trim();
-                String password = passwordText.getText().toString().trim();
+                final String name = nameText.getText().toString().trim();
+                final String password = passwordText.getText().toString().trim();
                 String confPassword = confirmPasswordEditText.getText().toString().trim();
-                String email = emailText.getText().toString().trim();
-                String phone = phoneText.getText().toString().trim();
+                final String email = emailText.getText().toString().trim();
+                final String phone = phoneText.getText().toString().trim();
                 if(TextUtils.isEmpty(name)) {
                     Toast.makeText(NewAccountActivity.this, "Please enter name!", Toast.LENGTH_SHORT).show();
                     return;
@@ -57,13 +62,20 @@ public class NewAccountActivity extends AppCompatActivity {
                     Toast.makeText(NewAccountActivity.this,"password not matching",Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(NewAccountActivity.this, new OnCompleteListener<AuthResult>() {
+                    final Task<AuthResult> createdUser = mAuth.createUserWithEmailAndPassword(email,password);
+                    createdUser.addOnCompleteListener(NewAccountActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(!task.isSuccessful()){
                                 Toast.makeText(NewAccountActivity.this,"Sign up failed",Toast.LENGTH_SHORT).show();
                             }
                             else{
+                                String uid = createdUser.getResult().getUser().getUid();
+                                Map<String, Object> childUpdates = new HashMap<>();
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                                ref.child("users").child(uid).push();
+                                childUpdates.put(uid,new UserModel(name,email,phone));
+                                ref.updateChildren(childUpdates);
                                 startActivity(new Intent(NewAccountActivity.this,SignInActivity.class));
                                 finish();
                             }

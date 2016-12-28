@@ -64,5 +64,14 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
+        forgotPassText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SignInActivity.this,ResetPasswordActivity.class);
+                intent.putExtra(ResetPasswordActivity.EMAIL_TO_RESET_PASSWORD,emailText.getText().toString());
+                startActivity(intent);
+            }
+        });
+
     }
 }
